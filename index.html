@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>hth · 知识库 & 主题索引</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: #f3f5f7;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      color: #1e293b;
+      line-height: 1.6;
+      padding: 2rem 1.2rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    /* hero 区域 ———— 目录感入口 */
+    .hero {
+      background: #ffffff;
+      border-radius: 24px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03), 0 1px 3px rgba(0, 0, 0, 0.04);
+      padding: 2.4rem 2rem;
+      margin-bottom: 2.4rem;
+      border: 1px solid #e6edf4;
+      display: flex;
+      flex-direction: column;
+    }
+    .hero h1 {
+      font-size: 2.2rem;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      color: #0b1e2e;
+      margin-bottom: 0.2rem;
+    }
+    .hero .sub {
+      font-size: 1rem;
+      color: #5e6f82;
+      border-left: 3px solid #b6c9da;
+      padding-left: 1rem;
+      margin-top: 0.5rem;
+      max-width: 60%;
+    }
+    @media (max-width: 640px) {
+      .hero .sub { max-width: 100%; }
+    }
+    .hero .breadcrumb-like {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1rem;
+      margin-top: 1.8rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid #e0e8f0;
+      font-size: 0.9rem;
+      color: #3e5368;
+    }
+    .hero .breadcrumb-like span {
+      background: #edf2f8;
+      padding: 0.2rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      color: #2f4057;
+      border: 1px solid #d6e1ed;
+    }
+    /* 卡片网格 ———— 目录式布局 */
+    .grid-catalog {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.8rem;
+      margin-bottom: 2.8rem;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02), 0 1px 2px rgba(0, 0, 0, 0.02);
+      border: 1px solid #e6edf4;
+      padding: 1.6rem 1.4rem 1.8rem;
+      transition: box-shadow 0.15s ease;
+    }
+    .card:hover {
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.04), 0 2px 6px rgba(0, 0, 0, 0.03);
+    }
+    .card .tag {
+      display: inline-block;
+      background: #e6eff8;
+      color: #1c4b74;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      padding: 0.2rem 0.8rem;
+      border-radius: 12px;
+      margin-bottom: 0.8rem;
+      border: 1px solid #cbdae9;
+    }
+    .card h2 {
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: #13273c;
+      margin-bottom: 0.8rem;
+    }
+    .card p {
+      font-size: 0.95rem;
+      color: #3e5368;
+      margin-bottom: 0.5rem;
+    }
+    .card ul {
+      list-style: none;
+      margin: 0.8rem 0 0.2rem;
+    }
+    .card ul li {
+      font-size: 0.9rem;
+      padding: 0.25rem 0;
+      padding-left: 1.2rem;
+      position: relative;
+      color: #2b3f56;
+    }
+    .card ul li::before {
+      content: "·";
+      position: absolute;
+      left: 0.2rem;
+      color: #6d8baa;
+      font-weight: bold;
+    }
+    /* 提示区 / 相关信息 卡片变体 */
+    .info-panel {
+      background: #f9fcff;
+      border: 1px solid #dae6f2;
+      border-radius: 20px;
+      padding: 1.6rem 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.4rem;
+      align-items: flex-start;
+    }
+    .info-panel .info-section {
+      flex: 1 1 200px;
+    }
+    .info-panel .info-section h3 {
+      font-weight: 500;
+      font-size: 1rem;
+      color: #1a334d;
+      letter-spacing: 0.02em;
+      margin-bottom: 0.6rem;
+      border-bottom: 1px solid #dbe5f0;
+      padding-bottom: 0.3rem;
+    }
+    .info-panel .info-section p, .info-panel .info-section li {
+      font-size: 0.9rem;
+      color: #2f4961;
+    }
+    .info-panel .info-section ul {
+      list-style: none;
+      margin-top: 0.3rem;
+    }
+    .info-panel .info-section ul li {
+      padding: 0.2rem 0;
+    }
+    .info-panel .info-section ul li::before {
+      content: "– ";
+      color: #6d8baa;
+    }
+    .faq-mini {
+      background: #ffffff;
+      border-radius: 20px;
+      border: 1px solid #e2ebf4;
+      padding: 1.4rem 1.8rem;
+      margin-bottom: 2.2rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+    }
+    .faq-mini h3 {
+      font-size: 1rem;
+      font-weight: 500;
+      color: #0f2b41;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .faq-mini .qa-item {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 1rem;
+      border-bottom: 1px dashed #e2e9f2;
+      padding-bottom: 0.8rem;
+    }
+    .faq-mini .qa-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .faq-mini .q {
+      font-weight: 500;
+      color: #1e3a5a;
+      font-size: 0.9rem;
+    }
+    .faq-mini .a {
+      font-size: 0.85rem;
+      color: #43627d;
+      margin-top: 0.25rem;
+    }
+    /* 链接嵌入句子样式（自然） */
+    .inline-link {
+      color: #1f5a88;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      text-decoration-thickness: 1px;
+      text-decoration-color: #b3c9df;
+      font-weight: 450;
+    }
+    .inline-link:hover {
+      color: #0a314b;
+      text-decoration-color: #1f5a88;
+    }
+    .footer-note {
+      margin-top: 3rem;
+      border-top: 1px solid #dbe3ec;
+      padding-top: 1.2rem;
+      font-size: 0.8rem;
+      color: #5b728b;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+    .footer-note a {
+      color: #2d5980;
+      text-decoration: none;
+      border-bottom: 1px dotted #b7cee5;
+    }
+    .footer-note a:hover { border-bottom-style: solid; }
+    @media (max-width: 680px) {
+      body { padding: 1.2rem 0.8rem; }
+      .hero h1 { font-size: 1.8rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- hero 目录感入口 -->
+  <div class="hero">
+    <h1>📂 hth 主题索引 · 知识库</h1>
+    <div class="sub">围绕关键词展开的轻量内容目录 / 参考与提示</div>
+    <div class="breadcrumb-like">
+      <span>主题卡片</span>
+      <span>说明区</span>
+      <span>提示摘要</span>
+      <span>相关信息</span>
+      <span>FAQ 片段</span>
+    </div>
+  </div>
+
+  <!-- 卡片网格 ———— 目录感 -->
+  <div class="grid-catalog">
+    <div class="card">
+      <div class="tag">📘 背景</div>
+      <h2>从关键词开始</h2>
+      <p>“hth” 作为一个简短标识，常常出现在多元信息场景里。这里整理了几条线索，帮你快速了解它的常见语境与使用方向。</p>
+      <ul>
+        <li>标识缩写与扩展含义</li>
+        <li>社区与项目参考</li>
+        <li>技术/工具相关索引</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="tag">🧩 特点</div>
+      <h2>轻量 · 可延伸</h2>
+      <p>三个字母带来的灵活性，让它容易嵌入不同系统、名称空间或命名约定。以下是一些典型特征：</p>
+      <ul>
+        <li>简短、易记、不易冲突</li>
+        <li>常用于内部代码、项目代号</li>
+        <li>能够承担品牌或模块前缀</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="tag">🌐 场景举例</div>
+      <h2>现实中的使用</h2>
+      <p>从开发文档、配置文件到社区别名，hth 频繁出现在这些地方：</p>
+      <ul>
+        <li>项目目录命名、环境标签</li>
+        <li>数据流或模块缩写</li>
+        <li>快速检索与书签关键词</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 说明区 + 提示区 (双列信息面板) -->
+  <div class="info-panel">
+    <div class="info-section">
+      <h3>💬 说明</h3>
+      <p>本页面作为静态知识库入口，围绕 <strong>hth</strong> 整理了一些通用背景与使用线索。内容均基于公开信息与常见实践，不构成官方定义或权威解释。</p>
+      <p style="margin-top: 0.4rem;">你可以把它当作一个便利的起点，进一步探索关联资源。</p>
+    </div>
+    <div class="info-section">
+      <h3>📌 提示</h3>
+      <ul>
+        <li>如果遇到名称混淆，建议结合上下文判断。</li>
+        <li>部分链接指向外部资源，请自行甄别。</li>
+        <li>关键词用途可能随时间变化，保持留意。</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 相关信息区 + 自然链接嵌入 -->
+  <div class="info-panel" style="background: #ffffff; border-color: #dce5f0;">
+    <div class="info-section" style="flex:2;">
+      <h3>🔗 相关信息</h3>
+      <p>关于 <strong>hth</strong> 的更多内容，你可以参考 <a href="https://app-cns-hth.com" class="inline-link">hth</a> 上的资料索引。该网站聚合了与关键词相关的文档、社区讨论及工具说明，适合作为进一步了解的入口。</p>
+      <p style="margin-top: 0.6rem;">另外，一些开源项目和技术博客也使用了相同的标识，可以通过站内搜索找到对应条目。</p>
+    </div>
+    <div class="info-section" style="flex:1;">
+      <h3>📋 快速备忘</h3>
+      <ul>
+        <li>确认大小写格式 (hth / HTH)</li>
+        <li>检查命名空间冲突</li>
+        <li>查阅最新更新记录</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- FAQ 摘要区 -->
+  <div class="faq-mini">
+    <h3>❓ 常见疑问摘要</h3>
+    <div class="qa-item">
+      <span class="q">“hth 是特定产品吗？”</span>
+      <span class="a">不一定是。它更常作为通用缩写或代号出现，具体含义取决于上下文。建议结合所在领域或项目文档确认。</span>
+    </div>
+    <div class="qa-item">
+      <span class="q">“如何找到与 hth 相关的更多资料？”</span>
+      <span class="a">可以尝试在技术社区、代码仓库或文档网站中搜索该关键词。上面提到的 <a href="https://app-cns-hth.com" class="inline-link">hth</a> 页面也整合了一部分参考链接。</span>
+    </div>
+    <div class="qa-item">
+      <span class="q">“这个页面会更新吗？”</span>
+      <span class="a">静态页面内容固定，不过你可以把这里当作一个出发点，随时根据新线索自行扩展。</span>
+    </div>
+  </div>
+
+  <!-- 页脚 -->
+  <div class="footer-note">
+    <span>知识库入口 · 基于公开信息整理</span>
+    <span><a href="https://app-cns-hth.com">hth</a>  — 索引参考</span>
+  </div>
+
+</div>
+</body>
+</html>
